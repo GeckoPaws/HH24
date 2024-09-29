@@ -361,7 +361,7 @@ class Pioneer {
         const $riverButtons = $(".riverButtons");
         $(".game-screen").hide();
         const $riverInteraction1 = $(
-          "<h1 id='riverStatement'>There's a river up ahead. What would you like to do? </h1>"
+          "<h1 id='riverStatement'>There's a exam comming. What would you like to do? </h1>"
         );
         $riverDiv.append($riverInteraction1);
         $riverDiv.append(
@@ -375,11 +375,11 @@ class Pioneer {
           )
         );
         $riverButtons.append(
-          $("<button id=cross>Cross the river with your wagon</button>")
+          $("<button id=cross>Study with friends</button>")
         );
         $riverButtons.append(
           $(
-            "<button id=waitADay>Wait one day to see if the current dies down</button>"
+            "<button id=waitADay>PARTY!!! down</button>"
           )
         );
       }

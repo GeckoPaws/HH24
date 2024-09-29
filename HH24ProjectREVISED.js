@@ -565,13 +565,13 @@ class Pioneer {
       }
       if (ran === 0) {
         $messageBox.text(
-          "I can't wait to get to Oregon! I'm gonna be rich and have so much land!"
+          "I can't wait to get to my degree! I'm gonna be rich and have so much land!"
         );
   
         setTimeout(fade, 4000);
       } else if (ran === 1) {
         $messageBox.text(
-          "What a nice day! I gotta get to Oregon before this winter storm hits."
+          "What a nice day! I gotta get to class before this winter storm hits."
         );
   
         setTimeout(fade, 4000);
@@ -583,13 +583,13 @@ class Pioneer {
         setTimeout(fade, 4000);
       } else if (ran === 3) {
         $messageBox.text(
-          "Man, I wonder what the first thing I'll eat in Oregon is..."
+          "Man, I wonder what the first thing I'll eat in lunch is..."
         );
   
         setTimeout(fade, 4000);
       } else if (ran === 4) {
         $messageBox.text(
-          "My oxen are the best! I couldn't have done without them this trip"
+          "Miss Rev is the best! I couldn't have done without them this trip"
         );
         setTimeout(fade, 4000);
       }
@@ -599,7 +599,7 @@ class Pioneer {
       if (choice === "moveOn") {
         $(".town-interactions").hide();
         this.resumeGame();
-        $(".message-box").text("You've moved passed the town.");
+        $(".message-box").text("You've moved passed the classroom.");
   
         setTimeout(fade, 4000);
   
@@ -613,7 +613,7 @@ class Pioneer {
         this.resumeGame();
         $(".speed-buttons").hide();
         $(".message-box").text(
-          "You spent the day in town doing odd jobs and made some money! You decided to rest in town and feel much better in the morning."
+          "You spent the day in Wild Wild Aggieland doing odd jobs and made some money! You decided to rest in town and feel much better in the morning."
         );
   
         this.money += 20;

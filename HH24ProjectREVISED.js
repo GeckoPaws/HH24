@@ -778,7 +778,7 @@ class Pioneer {
         loseMusic.play();
         clearInterval(this.playerTimer);
         $(".game").hide();
-        const $loseDiv = $(".lose");
+        const $loseDiv = $(".lose");//
         $loseDiv.append($("<h1>You... unfortunately did not survive the Wild West Campus. Try again.</h1>"));
         $loseDiv.append(
           $(

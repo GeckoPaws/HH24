@@ -377,7 +377,7 @@ class Pioneer {
         $riverButtons.append(
           $("<button id=cross>Study with friends</button>")
         );
-        $riverButtons.append(
+        $riverButtons.append(//
           $(
             "<button id=waitADay>PARTY!!! down</button>"
           )

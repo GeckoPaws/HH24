@@ -112,11 +112,7 @@ const $healthTracker = $(
     `Howdy ${player.characterName}! Welcome to the Wild Wild Aggieland, woof!`
   );
 
-    }
-
-  
-//BACKGROUND
-
+ //BACKGROUND
 
 $message.append("<button id='next-button'>Next</button>");
 $stats.append($dayTracker);
@@ -130,6 +126,17 @@ $(".main-game-image").append(
     "<img id='main-game-image' src='https://f2.toyhou.se/file/f2-toyhou-se/images/89191695_WwutsmfkFLJ61gN.gif'>"
   )
 );
+    }
+//PLAYER SPRITE WALK
+
+$(".cowswalking").append(
+  $("<img id='cows' src='https://f2.toyhou.se/file/f2-toyhou-se/images/89196640_nLC6rNINPk8hngT.png'>")
+);
+$("#main-game-image").css("height", "350px");
+$("#next-button").on("click", function() {
+  game.displayStats();
+});
+},
 
 // JAYDEN 83 - 229
 

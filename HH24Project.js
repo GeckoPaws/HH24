@@ -129,21 +129,648 @@ $(".main-game-image").append(
     }
 //PLAYER SPRITE WALK
 
-$(".cowswalking").append(
-  $("<img id='cows' src='https://f2.toyhou.se/file/f2-toyhou-se/images/89196640_nLC6rNINPk8hngT.png'>")
-);
-$("#main-game-image").css("height", "350px");
-$("#next-button").on("click", function() {
-  game.displayStats();
+  $(".cowswalking").append(
+    $("<img id='cows' src='https://f2.toyhou.se/file/f2-toyhou-se/images/89196640_nLC6rNINPk8hngT.png'>")
+  );
+  $("#main-game-image").css("height", "350px");
+  $("#next-button").on("click", function() {
+    game.displayStats();
 });
 },
-
-// JAYDEN 83 - 229
-
-
-
+///////////////////////////////////////////////////
+//  BREAK 8     ///////////////////////////////////
+////////////////////////////////////////////////////
 
 
+
+
+displayStats: function() {
+  const $message = $(".message-box");
+  $message.text(
+    `You currently have $${this.money}, your health points are at ${this.health}, and your wagon has ${this.wagon.health} health points. You had a late start and need to reach Oregon (75) miles) in 10 days, or else a huge winter storm approaches and you are doomed. Are you ready to begin? You will start walking.`
+  );
+  $message.append("<button id='yesStart'>Ok</button>");
+},
+decideSpeed: function(speed) {
+  const $speedTracker = $(
+    "<h2 id='speed'>Current Speed: " + this.speed + "</h2>"
+  );
+  $(".speed-display").append($speedTracker);
+  const $speedDisplay = $(".speed-display");
+  if (speed === "run") {
+    this.speed = "Running";
+    $speedDisplay.text(`Current speed: ${this.speed}`);
+  } else if (speed === "walk") {
+    this.speed = "Walking";
+    $speedDisplay.text(`Current speed: ${this.speed}`);
+  } else if (speed === "stroll") {
+    this.speed = "Strolling";
+    $speedDisplay.text(`Current speed: ${this.speed}`);
+  } else if (speed === "Move very slowly") {
+    this.speed = "Moving very slowly";
+    $speedDisplay.text(`Current speed: ${this.speed}`);
+  }
+},
+timer: function() {
+  this.playerTimer = setInterval(function() {
+    game.currentTime++;
+    game.statsChanger();
+    game.statsDecrease();
+    game.starveCondition();
+    game.winOrLose();
+  }, 1000);
+},
+statsChanger: function(speed) {
+  let distance = this.distance;
+  let food = this.food;
+  if (this.speed === "Running" && this.food > 0) {
+    this.wagon.health -= 0.4;
+    this.food = food - 0.8;
+    $("#food").text(`Food: ${this.food.toFixed(1)}`);
+    this.distance = distance + 0.4;
+    $("#distance").text(
+      `Distance Traveled: ${this.distance.toFixed(1)} miles`
+    );
+  } else if (this.speed === "Walking" && this.food > 0) {
+    this.wagon.health -= 0.3;
+    this.food = food - 0.5;
+    $("#food").text(`Food: ${this.food.toFixed(1)}`);
+    this.distance = distance + 0.2;
+    $("#distance").text(
+      `Distance Traveled: ${this.distance.toFixed(1)} miles`
+    );
+  } else if (this.speed === "Strolling" && this.food > 0) {
+    this.wagon.health -= 0.2;
+    this.food = food - 0.4;
+    $("#food").text(`Food: ${this.food.toFixed(1)}`);
+    this.distance = distance + 0.1;
+    $("#distance").text(
+      `Distance Traveled: ${this.distance.toFixed(1)} miles`
+    );
+    $("#hp").text(`HP: ${this.health.toFixed(1)}`);
+  } else if (
+    this.speed === "Moving very slowly" &&
+    this.food > 0 &&
+    this.health < 99
+  ) {
+    this.wagon.health -= 0.1;
+    this.food = food - 0.3;
+    $("#food").text(`Food: ${this.food.toFixed(1)}`);
+    this.distance = distance;
+    $("#distance").text(
+      `Distance Traveled: ${this.distance.toFixed(1)} miles`
+    );
+    this.distance = distance + 0.2;
+    $("#distance").text(
+      `Distance Traveled: ${this.distance.toFixed(1)} miles`
+    );
+    this.health += 2;
+    $("#hp").text(`HP: ${this.health.toFixed(1)}`);
+  }
+},
+statsDecrease: function() {
+  if (this.currentTime % 30 === 0) {
+    this.days++;
+    $("#days").text(`Day: ${this.days}`);
+  }
+  if (this.wagon.health <= 80 && this.wagon.health >= 40) {
+    this.healthStatus = "Decent";
+    $("#healthStatus").text(`Wagon Health: ${this.healthStatus}`);
+  } else if (this.wagon.health < 40 && this.wagon.health >= 20) {
+    this.healthStatus = "Bad";
+    $("#healthStatus").text(`Wagon Health: ${this.healthStatus}`);
+  } else if (this.wagon.health < 20 && this.wagon.health > 5) {
+    this.healthStatus = "About to die";
+    $("#healthStatus").text(`Wagon Health: ${this.healthStatus}`);
+  } else if (this.wagon.health === 0) {
+    this.healthStatus = "No longer useable";
+    $("#healthStatus").text(`Wagon Health: ${this.healthStatus}`);
+  }
+},
+hunt: function() {
+  oxMusic.pause();
+  huntMusic.play();
+  $(".store-div").hide();
+  $(".game-screen").hide();
+  $(".hunt").prepend(
+    $(
+      "<h1 id='huntprompt'>I see some rabbits that I could hunt for meat! Quick, shoot them (click them) before it gets dark!</h1>"
+    )
+  );
+  $(".hunt-image").append(
+    $(
+      "<img id='hunting-background' src='https://i.pinimg.com/originals/b8/cb/bd/b8cbbda2ca1be6a11391559752937172.jpg'>"
+    )
+  );
+  $(".bunnyimg").append(
+    $("<img id='bunny' src='https://i.imgur.com/Vr27Ntq.png'>")
+  );
+
+  function bunnyMovement() {
+    setTimeout(moveBunny, 300);
+
+    setTimeout(moveBunny, 500);
+
+    setTimeout(moveBunny, 800);
+
+    setTimeout(moveBunny, 1200);
+
+    setTimeout(moveBunny, 1400);
+
+    // setTimeout(moveBunny, 1600);
+
+    setTimeout(function() {
+      $(".bunnyimg").hide();
+    }, 1650);
+
+    function moveBunny() {
+      $(".bunnyimg").css("left", "-=100px");
+    }
+  }
+  bunnyMovement();
+
+  setTimeout(resetBunny, 6000);
+  setTimeout(bunnyMovement, 6100);
+  setTimeout(resetBunny, 9000);
+  setTimeout(bunnyMovement, 9100);
+  setTimeout(resetBunny, 12000);
+  setTimeout(bunnyMovement, 12100);
+  setTimeout(resetBunny, 15000);
+  setTimeout(bunnyMovement, 15100);
+
+  function resetBunny() {
+    $(".bunnyimg")
+      .show()
+      .css("left", "1100px");
+  }
+
+  const $okHunt = "<button id='okHunt'>Done</button>";
+
+  setTimeout(function() {
+    $(".hunt").append($okHunt);
+  }, 7500);
+},
+interact: function(num) {
+  if (num === 1) {
+    oxMusic.pause();
+    boxMusic.play();
+    const $interactionDiv = $(".boxInfo");
+    $(".game-screen").hide();
+    const $interaction1 = $(
+      "<h1 id='boxstatement'>You've found a crate and barrel on the side of the road!</h1>"
+    );
+    const $interaction1Quest = $(
+      "<h2 id='boxquestion'>Would you like to open it at your own risk?</h2>"
+    );
+    const $interaction1Image = $(
+      "<img id='empty-crate' src='https://i.pinimg.com/originals/6c/09/b3/6c09b3d12f557bf77722c3f4acddba3e.jpg'>"
+    );
+    const $yesButton = $("<button id='yesBox'>Yes</button>");
+    const $noButton = $("<button id='noBox'>No</button>");
+    $interactionDiv.append($interaction1);
+    $interactionDiv.append($interaction1Quest);
+    $interactionDiv.append($interaction1Image);
+    $(".boxButtons").append($yesButton);
+    $(".boxButtons").append($noButton);
+  } else if (num === 2) {
+    oxMusic.pause();
+    riverMusic.play();
+    const $riverDiv = $(".riverInfo");
+    const $riverButtons = $(".riverButtons");
+    $(".game-screen").hide();
+    const $riverInteraction1 = $(
+      "<h1 id='riverStatement'>There's a river up ahead. What would you like to do? </h1>"
+    );
+    $riverDiv.append($riverInteraction1);
+    $riverDiv.append(
+      $(
+        "<img id='riverImage' src='https://format-magazine-production-res.cloudinary.com/image/upload/c_crop,h_388,w_465,x_154,y_0,f_jpg,f_auto/dpr_3.0/c_scale,w_767,h_639/A-River-Crossing-on-The-Oregon-Trail'>"
+      )
+    );
+    $riverButtons.append(
+      $(
+        "<button id=longRoute>Take the long route (adds on 2 additional days)</button>"
+      )
+    );
+    $riverButtons.append(
+      $("<button id=cross>Cross the river with your wagon</button>")
+    );
+    $riverButtons.append(
+      $(
+        "<button id=waitADay>Wait one day to see if the current dies down</button>"
+      )
+    );
+  }
+},
+interactionOptionsBox: function(option) {
+  let random = Math.floor(Math.random() * 2);
+  clearInterval(this.playerTimer);
+  function removeStuff() {
+    $("#empty-crate").remove();
+    $("#boxquestion").remove();
+    $("#boxstatement").remove();
+    $(".boxButtons").remove();
+  }
+  if (option === "box") {
+    if (random === 0) {
+      boxMusic.pause();
+      beesMusic.play();
+      removeStuff();
+      const $badStatus = $(
+        "<h2>The crate contained a hoard of wasps. You managed to escape, but at the expense of getting stung quite a few times.</h2>"
+      );
+      $(".boxInfo").append($badStatus);
+      $(".boxInfo").append(
+        $(
+          "<img id='wasp' src='https://bestanimations.com/Animals/Insects/Bees/bee-animated-gif-61.gif'>"
+        )
+      );
+      $(".boxInfo").append($("<button class='boxOk'>Ok</button>"));
+      this.health -= 30;
+      this.saveStats();
+    } else {
+      boxMusic.pause();
+      goodBoxMusic.play();
+      removeStuff();
+      const $goodStatus = $(
+        "<h2>The crate contained a bunch of food! It must've dropped off of someone else's wagon, but it's yours now!</h2>"
+      );
+      $(".boxInfo").append($goodStatus);
+      $(".boxInfo").append(
+        $(
+          "<img id='box-food' src='https://www.jing.fm/clipimg/detail/12-126337_b-fruit-clipart-food-clipart-garden-clipart.png'>"
+        )
+      );
+      $(".boxInfo").append($("<button class='boxOk'>Ok</button>"));
+      this.food += 30;
+      this.saveStats();
+    }
+  } else if (option === "noBox") {
+    removeStuff();
+    const $interactionDiv = $(".boxInfo");
+    const $interaction1Image = $(
+      "<img id='empty-crate' src='https://i.pinimg.com/originals/6c/09/b3/6c09b3d12f557bf77722c3f4acddba3e.jpg'>"
+    );
+    $interactionDiv.append(
+      "<h1>You decided to leave the crate alone and proceed on. </h1>"
+    );
+    $interactionDiv.append($interaction1Image);
+    $(".boxInfo").append($("<button class='boxOk'>Ok</button>"));
+  }
+},
+interactionOptionsRiver: function(answer) {
+  clearInterval(this.playerTimer);
+  $("#riverStatement").remove();
+  $("#cross").remove();
+  $("#longRoute").remove();
+  $("#waitADay").remove();
+  if (answer === "cross") {
+    $(".riverInfo").prepend(
+      $(
+        "<h1>You decided to cross the river right away. A lot of your food got wet and is no longer consumable.</h1>"
+      )
+    );
+    $("#riverImage").attr(
+      "src",
+      "https://thumbs.gfycat.com/WindySlightFlea-size_restricted.gif"
+    );
+    $(".riverButtons").append($("<button class='riverOk'>Ok</button>"));
+    if (this.food > 30) {
+      this.food -= 30;
+      this.saveStats();
+    } else {
+      this.food = 0;
+      this.saveStats();
+    }
+  } else if (answer === "wait") {
+    $(".riverInfo").prepend(
+      $(
+        "<h1>You decided to wait a day. The river calms down and you cross without any damage, but the hot sun causes you to have heat exhaustion.</h1>"
+      )
+    );
+    $("#riverImage").attr("src", "https://i.gifer.com/JzDJ.gif");
+    $("#riverImage").attr("id", "crossingRiver");
+    this.days++;
+    if (this.food > 18) {
+      this.food -= 18;
+      this.saveStats();
+    } else if (this.food < 18) {
+      this.food = 0;
+      this.saveStats();
+    }
+    this.health -= 35;
+    this.saveStats();
+    $(".riverButtons").append($("<button class='riverOk'>Ok</button>"));
+  } else if (answer === "longRoute") {
+    $(".riverInfo").prepend(
+      $(
+        "<h1>You decided to take the long way. You've lost two days, but didn't lose any extra health or food.</h1>"
+      )
+    );
+    $("#riverImage").attr("src", "https://i.imgur.com/2LIivqw.png");
+    this.days += 2;
+    if (this.food > 10) {
+      this.food -= 15;
+    } else {
+      this.food = 0;
+    }
+    this.health -= 10;
+    this.saveStats();
+    $(".riverButtons").append($("<button class='riverOk'>Ok</button>"));
+  }
+},
+starveCondition: function() {
+  if (this.food <= 1) {
+    $(".message-box").text(
+      "I'm starving! My health will drop now unless you can find some food."
+    );
+    if (this.health > 5) {
+      this.health -= 2;
+      this.saveStats();
+    } else if (this.food < 1 && this.health === 0) {
+      this.health = 0;
+      this.saveStats();
+    } else {
+      this.saveStats();
+    }
+  }
+},
+resumeGame: function() {
+  $(".game-screen").show();
+},
+saveStats: function() {
+  const days = this.days;
+  const health = this.health;
+  const food = this.food;
+  const distance = this.distance;
+  const money = this.money;
+  $("#hp").text(`Health: ${this.health.toFixed(1)}`);
+  $("#food").text(`Food: ${this.food.toFixed(1)}`);
+  $("#distance").text(`Distance Traveled: ${this.distance.toFixed(1)}`);
+  $("#days").text(`Day: ${this.days}`);
+  $("#money").text(`Money: $${this.money}`);
+},
+town: function() {
+  oxMusic.pause();
+  townMusic.play();
+  clearInterval(this.playerTimer);
+  $(".game-screen").hide();
+  const $townPrompt = $(
+    "<h1 id='townPrompt'>You've reached a town checkpoint. What would you like to do?</h1>"
+  );
+  const $townImage = $(
+    "<img id='townImage' src='https://static.turbosquid.com/Preview/001324/118/QY/_Z.jpg'>"
+  );
+  $(".town").append($townPrompt);
+  $(".town").append($townImage);
+  $(".townButtons").append($("<button id='moveOn'>Move on</button>"));
+  $(".townButtons").append(
+    $(
+      "<button id='goToStore'>Stop by the store to buy goods. (Can only go once)</button>"
+    )
+  );
+  $(".townButtons").append(
+    $("<button id='rest'>Rest a day to restore health + get money.</button>")
+  );
+},
+randomVoiceLines: function(ran) {
+  const $messageBox = $(".message-box");
+
+  function fade() {
+    $(".message-box").text("");
+  }
+  if (ran === 0) {
+    $messageBox.text(
+      "I can't wait to get to Oregon! I'm gonna be rich and have so much land!"
+    );
+
+    setTimeout(fade, 4000);
+  } else if (ran === 1) {
+    $messageBox.text(
+      "What a nice day! I gotta get to Oregon before this winter storm hits."
+    );
+
+    setTimeout(fade, 4000);
+  } else if (ran === 2) {
+    $messageBox.text(
+      "This trip was last minute. That's why I don't have much saved up..."
+    );
+
+    setTimeout(fade, 4000);
+  } else if (ran === 3) {
+    $messageBox.text(
+      "Man, I wonder what the first thing I'll eat in Oregon is..."
+    );
+
+    setTimeout(fade, 4000);
+  } else if (ran === 4) {
+    $messageBox.text(
+      "My oxen are the best! I couldn't have done without them this trip"
+    );
+    setTimeout(fade, 4000);
+  }
+},
+townInteractions(choice) {
+  clearInterval(this.playerTimer);
+  if (choice === "moveOn") {
+    $(".town-interactions").hide();
+    this.resumeGame();
+    $(".message-box").text("You've moved passed the town.");
+
+    setTimeout(fade, 4000);
+
+    function fade() {
+      $(".message-box").text("");
+    }
+
+    this.timer();
+  } else if (choice === "rest") {
+    $(".town-interactions").hide();
+    this.resumeGame();
+    $(".speed-buttons").hide();
+    $(".message-box").text(
+      "You spent the day in town doing odd jobs and made some money! You decided to rest in town and feel much better in the morning."
+    );
+
+    this.money += 20;
+    this.health += 40;
+    this.saveStats();
+    setTimeout(townAgain, 2000);
+
+    function townAgain() {
+      $(".message-box").text("");
+      $(".game-screen").hide();
+      $(".town-interactions").show();
+    }
+  }
+},
+store: function() {
+  townMusic.pause();
+  storeMusic.play();
+  $(".storeDiv").show();
+  clearInterval(this.playerTimer);
+  let total = 0;
+  let eggsBought = 0;
+  let meatBought = 0;
+  let ointmentBought = 0;
+  let wagonPartsBought = 0;
+  $(".town-interactions").hide();
+  const $storeDiv = $(".storeDiv");
+  const $itemsDiv = $(".items");
+  $(".storeOwner").append(
+    $(
+      "<img class='storeStuff' id='storeOwner' src='https://i.imgur.com/Th2wTxH.png'>"
+    )
+  );
+  $storeDiv.prepend(
+    $(
+      `<h3 class='storeStuff' id='storeprompt'>Welcome to my general store! You currently have $${this.money}.</br> What would you like to buy today? I have a limit of one wagon part and two for everything else.</h3>`
+    )
+  );
+  const $eggs = $(
+    "<button class='storeStuff' id='buyEggs'>Eggs: $5 each dozen (+12 food)</button>"
+  );
+
+  const $meat = $(
+    "<button class='storeStuff' id='buyMeat'>Meat: $8 for a steak (+20 food) </button>"
+  );
+
+  const $ointment = $(
+    "<button class='storeStuff' id='ointment'>Ointment: $6 for a bottle (+10 health) </button>"
+  );
+
+  const $wagonParts = $(
+    "<button class='storeStuff' id='wagonParts'>Wagon Parts: $35 (restores your wagon to full HP) </button>"
+  );
+
+  $itemsDiv.append($eggs);
+  $itemsDiv.append($meat);
+  $itemsDiv.append($ointment);
+  $itemsDiv.append($wagonParts);
+  $(".store-box").css("border", "2px solid white");
+  $(".store-box").html(
+    `<h3 class='storeStuff' id='total'>Current total: ${total}</h3><h4 class='storeStuff' id='totalEggs'>Eggs bought: ${eggsBought}</h4><h4  class='storeStuff' id='totalMeat'>Meat bought: ${meatBought}</h4><h4 class='storeStuff' id='totalOintment'>Ointment bought: ${ointmentBought}</h4><h4 class='storeStuff'  id='totalWagonParts'>Wagon parts bought: ${wagonPartsBought}</h4>`
+  );
+
+  $storeDiv.append("<button class='storeStuff' id='storeOk'>Ok</button>");
+
+  $("body").on("click", ".items", function(event) {
+    function updateTotals() {
+      $("#totalEggs").text(`Eggs bought: ${eggsBought}`);
+      $("#totalMeat").text(`Meat bought: ${meatBought}`);
+      $("#total").text(`Current total: ${total}`);
+      $("#totalOintment").text(`Ointment bought: ${ointmentBought}`);
+      $("#totalWagonParts").text(`Wagon parts bought: ${wagonPartsBought}`);
+    }
+
+    if (event.target.id === "buyEggs" && eggsBought < 2) {
+      eggsBought++;
+      total += 3;
+      game.total = total;
+      updateTotals();
+    } else if (event.target.id === "buyMeat" && meatBought < 2) {
+      meatBought++;
+      total += 8;
+      game.total = total;
+      updateTotals();
+    } else if (event.target.id === "ointment" && ointmentBought < 2) {
+      ointmentBought++;
+      total += 6;
+      game.total = total;
+      updateTotals();
+    } else if (event.target.id === "wagonParts" && wagonPartsBought < 1) {
+      wagonPartsBought++;
+      total += 35;
+      game.total = total;
+      updateTotals();
+    }
+  });
+
+  $("body").on("click", "#storeOk", function() {
+    storeMusic.pause();
+    townMusic.play();
+    if (game.money >= total) {
+      const eggsTot = eggsBought * 12;
+      const meatTot = meatBought * 20;
+      const ointmentTot = ointmentBought * 10;
+      const wagonTot = wagonPartsBought;
+      game.food += eggsTot;
+      game.food += meatTot;
+      game.health += ointmentTot;
+      if (wagonTot === 1) {
+        game.wagon.health = 100;
+      }
+      game.saveStats();
+    }
+    game.checkMoney();
+    setTimeout(game.randomVoiceLines(4), 5000);
+  });
+},
+
+checkMoney: function() {
+  if (this.money < this.total) {
+    $(".storeStuff").remove();
+    this.store();
+    $("#storeprompt").text(
+      "You don't seem to have enough for that purchase, buddy. Try again."
+    );
+    this.total = 0;
+  } else {
+    this.money -= this.total;
+    this.total = 0;
+    $("#storeprompt").text(
+      "Thanks for your purchase buddy! Hope you get to where ever you're trying to go safely."
+    );
+
+    setTimeout(resumeGame, 2000);
+
+    function resumeGame() {
+      $(".storeDiv").hide();
+      $(".town-interactions").show();
+      $("#goToStore").remove();
+    }
+  }
+},
+winOrLose: function() {
+  if (
+    this.distance >= 75 &&
+    this.health > 0 &&
+    this.days <= 10 &&
+    this.wagon.health > 1
+  ) {
+    oxMusic.pause();
+    winMusic.play();
+    clearInterval(this.playerTimer);
+    $(".game").remove();
+    const $winDiv = $(".win");
+    $winDiv.append($("<h1>Congrats! You've made it to Oregon!</h1>"));
+    $winDiv.append(
+      $(
+        "<img src='https://cdn.vox-cdn.com/thumbor/5UOEwi1yQauMOb0fD5bqGqmLcbA=/1400x0/filters:no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/3378408/hangingoutwithoxen.0.png'>"
+      )
+    );
+  } else if (this.health <= 0 || this.days > 10 || this.wagon.health <= 0) {
+    oxMusic.pause();
+    loseMusic.play();
+    clearInterval(this.playerTimer);
+    $(".game").hide();
+    const $loseDiv = $(".lose");
+    $loseDiv.append($("<h1>You didn't make it to Oregon. Try again.</h1>"));
+    $loseDiv.append(
+      $(
+        "<img src='https://media0.giphy.com/media/3oz8xBKJFKAXB6JAm4/source.gif'>"
+      )
+    );
+  }
+}
+};
+
+
+
+
+///////////////////////////////////////////////////
+//  BREAK 8     ///////////////////////////////////
+////////////////////////////////////////////////////
 
 
 //event listeners

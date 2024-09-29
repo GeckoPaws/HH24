@@ -770,7 +770,7 @@ class Pioneer {
         $winDiv.append($("<h1>Congrats! You've student life as a survived Wild Wild Aggieland cowboy!</h1>"));
         $winDiv.append(
           $(
-            "<img src='https://cdn.vox-cdn.com/thumbor/5UOEwi1yQauMOb0fD5bqGqmLcbA=/1400x0/filters:no_upscale()/cdn.vox-cdn.com/uploads/chorus_asset/file/3378408/hangingoutwithoxen.0.png'>"
+            "<img src='https://f2.toyhou.se/file/f2-toyhou-se/images/89190934_zPShg3AeubJUHZJ.png'>"
           )
         );
       } else if (this.health <= 0 || this.days > 10 || this.wagon.health <= 0) {
@@ -782,7 +782,7 @@ class Pioneer {
         $loseDiv.append($("<h1>You... unfortunately did not survive the Wild West Campus. Try again.</h1>"));
         $loseDiv.append(
           $(
-            "<img src='https://media0.giphy.com/media/3oz8xBKJFKAXB6JAm4/source.gif'>"
+            "<img src='https://f2.toyhou.se/file/f2-toyhou-se/images/89204071_HZk3hufUg9J1whD.png'>"
           )
         );
       }

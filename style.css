@@ -1,0 +1,225 @@
+body {
+  font-family: "Oswald", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  background-color: black;
+  color: white;
+}
+
+#welcome-image {
+  height: 600px;
+}
+#start-button {
+  display: block;
+  width: 10em;
+  height: 5em;
+  margin: 20px auto;
+}
+
+#name-entry-input {
+  text-align: center;
+  width: 10em;
+}
+
+#welcome-image {
+  width: 70%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.stats-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.speed-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin: 20px;
+}
+
+button {
+  font-family: "Concert One", cursive;
+  width: 10em;
+  height: 5em;
+  border-radius: 25px;
+}
+
+#main-game-image {
+  width: 60%;
+}
+
+.message-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.message-box button {
+  height: 3em;
+  width: 7em;
+  margin-top: 40px;
+}
+
+.speed-display {
+  font-family: "Oswald", sans-serif;
+  font-size: 25px;
+  margin-top: 10px;
+}
+
+.interaction {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+  align-content: center;
+}
+
+.interaction button {
+  margin: 50px 100px;
+}
+
+.boxInfo button {
+  display: block;
+  margin: 40px auto;
+}
+
+#wasp {
+  width: 50%;
+}
+
+#riverImage {
+  width: 40%;
+}
+
+#townImage {
+  width: 30%;
+  height: 40%;
+}
+
+.townButtons {
+  display: flex;
+  flex-direction: row;
+  vertical-align: top;
+  justify-content: center;
+}
+
+.townButtons button {
+  margin: 40px 30px;
+}
+
+.storeDiv {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+#storeOwner {
+  align-self: flex-start;
+  height: 350px;
+}
+.items {
+  display: inline-block;
+  float: right;
+}
+.items button {
+  justify-content: center;
+  margin: 30px 30px;
+  height: 60px;
+  width: 80px;
+  font-size: 10px;
+  vertical-align: top;
+}
+
+.store-box {
+  padding: 10px;
+  align-self: center;
+  height: 200px;
+  width: 200px;
+}
+
+.store-box h3 {
+  font-size: 15px;
+}
+.store-box h4 {
+  font-size: 13px;
+}
+
+#storeOk {
+  height: 30px;
+  width: 80px;
+  margin: 20px auto;
+}
+
+.hunt {
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+
+.bunnyimg {
+  position: absolute;
+  top: 500px;
+  left: 1100px;
+  height: 60px;
+  width: 70px;
+  overflow: hidden;
+}
+
+#bunny {
+  -webkit-animation: walk-west 1s steps(4) infinite;
+  z-index: 1;
+}
+
+@-webkit-keyframes walk-west {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+#hunting-background {
+  position: relative;
+  z-index: -1;
+  height: 550px;
+}
+
+#okHunt {
+  margin-top: 30px;
+}
+
+
+.main-game-image {
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+
+#main-game-image {
+  z-index: -1;
+}
+
+.cowswalking {
+  top: 180px;
+  left: 750px;
+  position: absolute;
+  height: 350px;
+  width: 350px;
+  overflow: hidden;
+}
+
+#box-food {
+  height: 400px;
+}
+
+#empty-crate {
+  height: 400px;
+}
